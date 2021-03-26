@@ -1,16 +1,15 @@
 package hu.zimikri.AOC;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class BridgeCrossing {
 
   private int fullTimeToCross;
-  private SortedList peopleOriginalSide;
-  private SortedList peopleOtherSide;
+  private SortedList thisSide;
+  private SortedList otherSide;
 
   public BridgeCrossing() {
-    peopleOtherSide = new SortedList();
+    otherSide = new SortedList();
   }
 
   public Integer getFullTimeToCross() {
@@ -33,14 +32,17 @@ public class BridgeCrossing {
 
   public BridgeCrossing findShortestTime(String input) throws Exception {
     validateInput(input);
-    peopleOriginalSide = createListFromInput(input);
+    thisSide = createListFromInput(input);
 
-    if (peopleOriginalSide.size() == 1) {
-      fullTimeToCross = peopleOriginalSide.getFirst();
+    if (thisSide.size() == 1) {
+      fullTimeToCross = thisSide.getFirst();
     }
 
-    while (peopleOriginalSide.size() > 1) {
+    while (thisSide.size() > 1) {
       crossTheBridge();
+      if (!thisSide.isEmpty()) {
+        goBack();
+      }
     }
 
     return this;
@@ -48,7 +50,6 @@ public class BridgeCrossing {
 
   public SortedList createListFromInput(String input) {
     SortedList sortedList = new SortedList();
-
     for (String time : input.split("[ ,]+")) {
       sortedList.add(time);
     }
@@ -57,20 +58,34 @@ public class BridgeCrossing {
   }
 
   private void crossTheBridge() {
-    if (peopleOtherSide.size() % 2 == 0) {
-      peopleOtherSide.add(peopleOriginalSide.getFirst());
-      fullTimeToCross += peopleOriginalSide.getFirstValue();
-      peopleOtherSide.add(peopleOriginalSide.getFirst());
-    } else {
-      fullTimeToCross += peopleOriginalSide.getLastValue();
-      peopleOtherSide.add(peopleOriginalSide.getLast());
-      peopleOtherSide.add(peopleOriginalSide.getLast());
+    if (otherSide.size() == 0
+        || thisSide.size() == 2
+        || otherSide.getFirstValue() >= thisSide.get(1)) {
+      otherSide.add(thisSide.getFirst());
+      fullTimeToCross += thisSide.getFirstValue();
+      otherSide.add(thisSide.getFirst());
+
+      return;
     }
 
-    if (!peopleOriginalSide.isEmpty()) {
-      fullTimeToCross += peopleOtherSide.getFirstValue();
-      peopleOriginalSide.add(peopleOtherSide.getFirst());
+    Integer otherSideQuickest = otherSide.getFirstValue();
+    Integer thisSideQuickest = thisSide.getFirstValue();
+    Integer thisSideSlowest = thisSide.getLastValue();
+    Integer thisSide2ndSlowest = thisSide.get(thisSide.size() - 2);
+
+    fullTimeToCross += thisSideSlowest;
+    otherSide.add(thisSide.getLast());
+    if (thisSideQuickest + thisSide2ndSlowest > 2 * otherSideQuickest) {
+      otherSide.add(thisSide.getLast());
+    } else {
+      otherSide.add(thisSide.getFirst());
     }
+
+  }
+
+  public void goBack() {
+    fullTimeToCross += otherSide.getFirstValue();
+    thisSide.add(otherSide.getFirst());
   }
 
   public boolean validateInput(String input) throws Exception {

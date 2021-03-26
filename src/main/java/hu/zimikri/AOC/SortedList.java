@@ -24,6 +24,10 @@ public class SortedList {
     return true;
   }
 
+  public Integer get(int index) {
+    return sorted.get(index);
+  }
+
   public Integer getFirst() {
     Integer first = sorted.get(0);
     sorted.remove(0);
