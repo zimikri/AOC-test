@@ -69,7 +69,7 @@ public class BridgeCrossing {
     return sortedList;
   }
 
-  private void crossTheBridge() {
+  void crossTheBridge() {
     if (otherSide.size() == 0
         || thisSide.size() == 2
         || otherSide.getFirstValue() >= thisSide.get(1)) {

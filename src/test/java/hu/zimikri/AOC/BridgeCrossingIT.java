@@ -18,6 +18,16 @@ public class BridgeCrossingIT {
   }
 
   @Test
+  public void findShortestTimeShouldReturnExpectedValue2() throws Exception {
+    String input = "2 2 2 1";
+    bridgeCrossing = new BridgeCrossing();
+    Integer actual = bridgeCrossing.findShortestTime(input).getFullTimeToCross();
+    Integer expected = 8;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
   public void findShortestTimeShouldReturnGivenValueWhenWeHaveOneElement() throws Exception {
     String input = "10";
     bridgeCrossing = new BridgeCrossing();
