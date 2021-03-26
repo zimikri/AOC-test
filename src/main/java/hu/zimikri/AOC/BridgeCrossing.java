@@ -16,6 +16,18 @@ public class BridgeCrossing {
     return fullTimeToCross;
   }
 
+  public SortedList getThisSide() {
+    return thisSide;
+  }
+
+  public SortedList getOtherSide() {
+    return otherSide;
+  }
+
+  public void setThisSide(SortedList thisSide) {
+    this.thisSide = thisSide;
+  }
+
   public String loadDataFromConsole() {
     System.out.println("Add comma/space separated integers (time to get to the other side)!");
 
