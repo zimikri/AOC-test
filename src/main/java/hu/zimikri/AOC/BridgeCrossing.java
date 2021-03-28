@@ -28,12 +28,12 @@ public class BridgeCrossing {
     this.thisSide = thisSide;
   }
 
-  public String loadDataFromConsole() {
-    System.out.println("Add comma/space separated integers (time to get to the other side)!");
+  public String loadDataFromConsole() throws Exception {
+    System.out.println("Add comma/space separated integers or type `exit` to terminate");
 
     Scanner in = new Scanner(System.in);
     String input = in.nextLine();
-    in.close();
+    in.reset();
 
     return input;
   }
@@ -101,6 +101,11 @@ public class BridgeCrossing {
   }
 
   public boolean validateInput(String input) throws Exception {
+    if ("exit".equals(input)) {
+      System.out.println("App is terminated");
+      System.exit(0);
+    }
+
     if (!input.trim().matches("[0-9 ,]+")) {
       throw new Exception("Invalid input");
     }
@@ -110,6 +115,6 @@ public class BridgeCrossing {
 
   @Override
   public String toString() {
-    return "The shortest time is " + fullTimeToCross + " minutes.";
+    return "The shortest time is " + fullTimeToCross + " minutes.\n";
   }
 }

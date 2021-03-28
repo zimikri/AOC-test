@@ -18,12 +18,15 @@ public class AocApplication {
       System.out.println(e.getMessage());
     }
 
-    // Read data from console
-    try {
-      BridgeCrossing bridgeCrossing = new BridgeCrossing();
-      System.out.println(bridgeCrossing.findShortestTime().toString());
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    // Read data from console (you can terminate with input `exit`)
+    while (true) {
+      try {
+        BridgeCrossing bridgeCrossing = new BridgeCrossing();
+        System.out.println(bridgeCrossing.findShortestTime().toString());
+      } catch (Exception e) {
+        System.out.println(e.getClass().getName());
+        System.out.println(e.getMessage());
+      }
     }
   }
 }
